@@ -1,7 +1,7 @@
 # 🌿 LeafLytic
 
 **LeafLytic** is an intelligent deep learning-powered web application for detecting plant leaf diseases. With a fine-tuned **MobileNetV2** model, LeafLytic identifies **15 different types of leaf diseases** with an impressive **92% accuracy**. The tool aims to assist farmers, gardeners, and agricultural experts with fast and reliable crop health diagnosis.
-Contributors: https://github.com/Ameer-design351. https://github.com/Venkataomanand
+- Contributors: Ameerunnisa Khan {https://github.com/Ameer-design351} , Venkata Omanand{https://github.com/Venkataomanand}
 ---
 
 ## 🚀 Features
