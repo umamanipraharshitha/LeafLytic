@@ -98,3 +98,4 @@ model.fit(
 
 # --- Save model ---
 model.save('leaf_disease_detector.h5')
+
