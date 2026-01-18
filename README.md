@@ -1,107 +1,117 @@
 
+# 🌿 Leaf Disease Detection Web Application (Flask + MobileNetV2)
 
-# Leaf Disease Detection Web App
+## 1️⃣ Objective
 
-A web application to identify plant leaf diseases using a **pretrained EfficientNetB0** model. Users can log in with Google, upload leaf images, and get predictions with confidence scores. The model achieves **~92% accuracy** on the test dataset.
+This project is a **web-based plant disease detection application** that allows users to:
 
----
+* Upload an image of a leaf
+* Automatically classify it into one of **15 plant disease categories** (or healthy)
+* Get a **confidence score** for the prediction
+* Access the app securely via **Google OAuth login**
 
-## Features
-
-* **Google OAuth Login** for secure access.
-* **Leaf Disease Detection** for 16 classes (Tomato, Potato, Pepper; healthy & diseased).
-* **Upload Images** and get prediction with confidence.
-* **Data Augmentation** during model training.
-* **Responsive Web Pages:** Home, LeafLens, Search, About, Contact, Results.
+The system is designed for **farmers, researchers, and students** to quickly and accurately detect plant diseases.
 
 ---
 
-## Installation
+## 2️⃣ Dataset & Model
 
-1. Clone the repository:
+* **Dataset:** PlantVillage (15 classes, including healthy leaves)
+* **Model:** MobileNetV2 (pre-trained on ImageNet, fine-tuned on PlantVillage)
+* **Input size:** 224×224×3
+* **Training details:**
 
-```bash
-git clone https://github.com/yourusername/leaf-disease-detector.git
-cd leaf-disease-detector
-```
+  * Initial training with frozen base layers
+  * Fine-tuning last 40 layers for improved accuracy
+  * Data augmentation: rotation, zoom, shift, horizontal flip
+* **Performance:**
 
-2. Create and activate a virtual environment:
-
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
-```
-
-3. Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Set up Google OAuth:
-
-   * Place `client_secret.json` in project root.
-   * Redirect URI: `http://127.0.0.1:5000/callback`.
-
-5. Ensure upload folder exists:
-
-```bash
-mkdir -p static/uploads
-```
+  * Test Accuracy: ~93.8%
+  * Macro F1-score: 0.93
+  * Weighted F1-score: 0.94
+* **Model file:** `leaf_disease_model.keras`
 
 ---
 
-## Usage
+## 3️⃣ Web Application Features
 
-1. Run the app:
+### 🔹 Authentication
 
-```bash
-python app.py
-```
+* Uses **Google OAuth 2.0** for secure login
+* Supports profile fetching: name, email, profile picture
+* Protected pages with `login_required` decorator
 
-2. Open in browser: `http://127.0.0.1:5000/`
+### 🔹 Pages
 
-3. Login with Google to access protected pages (LeafLens, Search).
+**Public:**
 
-4. Upload a leaf image on **LeafLens** to get prediction and confidence.
+* Home
+* About
+* Contact
+
+**Protected (login required):**
+
+* LeafLens (upload & prediction)
+* Search
+* CompleteSignup
+
+### 🔹 Leaf Disease Prediction
+
+* Users upload leaf images via `/leaflens` page
+* Uploaded images are:
+
+  * Preprocessed to 224×224 RGB format
+  * Normalized to `[0,1]`
+  * Sent through the **MobileNetV2 model**
+* Predictions returned:
+
+  * Disease class label
+  * Confidence score (%)
+  * Display of uploaded leaf image
+
+### 🔹 File Handling
+
+* Uploaded images saved in `static/uploads`
+* Secure filenames handled with `werkzeug.utils.secure_filename`
+* Predictions rendered on `results.html` with confidence and image
 
 ---
 
-## Model Details
+## 4️⃣ Technical Stack
 
-* **Architecture:** EfficientNetB0 (pretrained on ImageNet)
-* **Input Size:** 224 x 224 RGB
-* **Output Classes:** 16 leaf conditions
-* **Accuracy:** ~92%
-* **Techniques:** Data augmentation, class weighting, fine-tuning top layers, then deeper layers
-
----
-
-## File Structure
-
-```
-leaf-disease-detector/
-├── app.py
-├── leaf_disease_detector.h5
-├── client_secret.json
-├── dataset/          # optional for retraining
-├── static/uploads/   # uploaded images
-├── templates/        # HTML pages
-└── requirements.txt
-```
+* **Backend:** Flask (Python)
+* **Authentication:** Google OAuth 2.0
+* **Deep Learning:** TensorFlow + Keras
+* **Image Processing:** PIL, NumPy
+* **Frontend:** HTML templates (home.html, leaflens.html, results.html, etc.)
+* **Deployment:** Local development via `app.run(debug=True)`; can be deployed on cloud platforms
 
 ---
 
-## Dependencies
+## 5️⃣ Key Advantages
 
-* Flask
-* TensorFlow / Keras
-* Pillow
-* NumPy
-* scikit-learn
-* google-auth, google-auth-oauthlib
-* werkzeug
+* **Lightweight model:** MobileNetV2 (~3.9M params) suitable for web or mobile deployment
+* **High accuracy:** 93–94% across 15 classes
+* **Secure:** Google OAuth ensures only authenticated users can access protected pages
+* **User-friendly:** Upload, view results, and confidence visualization in one workflow
+
+---
+
+## 6️⃣ Potential Enhancements
+
+1. **Explainable AI:** Integrate Grad-CAM to show which parts of the leaf influenced the prediction
+2. **Mobile Deployment:** Convert `.keras` model to `.tflite` for Android apps
+3. **Additional Diseases:** Expand dataset to more plant species and diseases
+4. **Real-time Detection:** Integrate live camera feed prediction
+
+---
+
+### 7️⃣ Conclusion
+
+This **Flask-based Leaf Disease Detection Web App** combines **state-of-the-art deep learning** (MobileNetV2) with a **secure, user-friendly web interface**. It achieves **high accuracy**, provides **reliable predictions**, and is ready for deployment for agricultural decision support.
+
+
+
 
 Co-authored-by: Ameerunnisa Khan <ameerunnisakhan786@gmail.com>
 Co-authored-by: Venkata Omanand <venkataomanand@gmail.com>"
