@@ -15,7 +15,7 @@ import google.auth.transport.requests
 from functools import wraps  # for proper login_required
 model = load_model('leaf_disease_model.keras')
 app = Flask(__name__)
-app.secret_key = "leaflytic3"
+app.secret_key = "your_secret_key"
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
